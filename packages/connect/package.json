@@ -1,0 +1,17 @@
+{
+  "name": "connect",
+  "version": "1.0.0",
+  "description": "a typescript module for loading the connect widget",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "yarn test",
+    "dev": "parcel watch",
+    "build": "parcel build"
+  },
+  "author": "casprine <casprine.001@gmail.com>",
+  "license": "ISC",
+  "source": "index.ts",
+  "devDependencies": {
+    "parcel": "^2.6.0"
+  }
+}
