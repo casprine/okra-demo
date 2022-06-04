@@ -1,0 +1,16 @@
+.header {
+  outline: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.backIcon {
+  cursor: pointer;
+}
+
+.closeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,16 @@
+.wrapper {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  width: 375px;
+  height: 600px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  padding: 24px;
+}
