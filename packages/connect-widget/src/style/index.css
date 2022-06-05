@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-size: 2rem;
   outline: 1px dotted red;
+  margin: 0;
 }
 
 html {
@@ -206,4 +207,11 @@ button {
   padding: 0;
   border: 0;
   background-color: transparent;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 8px;
 }
