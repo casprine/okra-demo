@@ -3,7 +3,7 @@ import style from "./input.module.css";
 
 import { TextInput } from "./TextInput";
 
-type SearchInputProps = ComponentProps<typeof TextInput>;
+type SearchInputProps = Partial<ComponentProps<typeof TextInput>>;
 
 const SearchIcon: FunctionalComponent = (props) => (
   <svg

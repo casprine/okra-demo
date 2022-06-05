@@ -15,7 +15,7 @@ export const Header: FunctionalComponent<HeaderProps> = ({
   return (
     <header className={style.header}>
       {onBackClick && (
-        <div className={style.backIcon}>
+        <div className={style.backIcon} onClick={onBackClick}>
           <svg
             width={17}
             height={16}
