@@ -1,16 +1,15 @@
 import { FunctionalComponent, h } from "preact";
+import { route } from "preact-router";
 import style from "./header.module.css";
 
 interface HeaderProps {
   onBackClick?: () => void;
   showImage?: boolean;
-  onClose: () => void;
 }
 
 export const Header: FunctionalComponent<HeaderProps> = ({
   onBackClick,
   showImage = true,
-  onClose,
 }) => {
   return (
     <header className={style.header}>
@@ -44,7 +43,7 @@ export const Header: FunctionalComponent<HeaderProps> = ({
         />
       )}
 
-      <button className={style.closeButton}>
+      <button className={style.closeButton} onClick={() => route("/")}>
         <svg
           width={25}
           height={24}

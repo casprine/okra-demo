@@ -6,6 +6,7 @@
 
 .backIcon {
   cursor: pointer;
+  margin-right: auto;
 }
 
 .closeButton {

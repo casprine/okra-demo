@@ -1,0 +1,19 @@
+.container {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container p {
+  text-align: center;
+  color: #737a91;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.container h2 {
+  text-align: center;
+  margin-top: auto;
+}

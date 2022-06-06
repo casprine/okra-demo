@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "preact";
-import { Container, Header, AccountCard } from "../../components";
+import { Container, Header } from "../../components";
 
 const CheckIcon = () => (
   <svg

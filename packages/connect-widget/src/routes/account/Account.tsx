@@ -42,7 +42,7 @@ export const AccountPage: FunctionalComponent = () => {
 
   return (
     <Container>
-      <Header onClose={() => {}} onBackClick={() => route("/form", true)} />
+      <Header onBackClick={() => route("/form", true)} />
       <h3 className="title">Which account do you want to pay from?</h3>
 
       <p className="subtitle account-name">Account Name: {userData.name}</p>
