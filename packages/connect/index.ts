@@ -8,7 +8,7 @@ declare global {
 
 export interface ConnectionProps {
   key: string;
-  env: "production" | "staging";
+  env: "production" | "sandbox";
   token: string;
   country: string;
   payment: boolean;

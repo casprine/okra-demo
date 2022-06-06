@@ -64,11 +64,11 @@ const LoadingStatus: FunctionalComponent = () => {
 };
 
 export const HomePage: FunctionalComponent = () => {
-  const { pageStatus } = useContextState();
+  const { pageStatus, errorMessage } = useContextState();
 
   return (
     <Container height={300}>
-      {pageStatus === "ERROR" && <ErrorScreen errorMessage="Invalid API key" />}
+      {pageStatus === "ERROR" && <ErrorScreen errorMessage={errorMessage!} />}
       {pageStatus === "SUCCESS" && <LinkAccount />}
       {pageStatus === "LOADING" && <LoadingStatus />}
     </Container>

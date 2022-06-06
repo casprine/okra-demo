@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "parcel": "latest"
+  },
+  "dependencies": {
+    "qs": "^6.10.3"
   }
 }

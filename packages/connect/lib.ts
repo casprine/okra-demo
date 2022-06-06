@@ -1,4 +1,6 @@
+import { ConnectionProps } from ".";
 import { spinnerStyles, containerStyles, iframeStyles } from "./styles";
+import qs from "qs";
 
 const widgetId: string = "okra-widget-div";
 const iframeId: string = "okra-widget-iframe";
@@ -7,22 +9,25 @@ const loaderId: string = "okra-widget-loading-indicator";
 /**
  * setups up the iframe to be loaded
  */
-export function setup(args) {
+export function setup(args: ConnectionProps) {
   //  // safe guard for SSR
   if (!document || !window) return;
 
   const origin: URL = new URL("http://localhost:8080");
 
   if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
+    // @ts-ignore
     const iframe = (HTMLIFrameElement = document.getElementById(iframeId));
     iframe?.setAttribute("src", origin.href);
     return;
   }
 
+  const queryString = qs.stringify(args);
+
   // set options to url
-  Object.keys(args).map((key: string) =>
-    origin.searchParams.set(key, args[key])
-  );
+  origin.searchParams.set("config", queryString);
+
+  console.log("<queryString>", queryString);
 
   // container for iframe wrapper
   const container: HTMLDivElement = document?.createElement("div");
@@ -44,7 +49,7 @@ function createIframe(origin: URL) {
   iframe.setAttribute("id", iframeId);
   iframe.setAttribute("allowfullscreen", "true");
   iframe.setAttribute("frameborder", "0");
-  iframe.setAttribute("title", "Mono connect");
+  iframe.setAttribute("title", "Okra connect");
   iframe.setAttribute(
     "sandbox",
     "allow-forms allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups"
@@ -78,8 +83,8 @@ export function createLoader() {
  * hides iframe widget
  */
 export function closeWidget() {
-  const container: HTMLElement = document.getElementById(widgetId);
-  const iframe: HTMLElement = document.getElementById(iframeId);
+  const container: HTMLElement = document.getElementById(widgetId)!;
+  const iframe: HTMLElement = document.getElementById(iframeId)!;
 
   container.style.display = "none";
   iframe.style.display = "none";
@@ -91,8 +96,8 @@ export function closeWidget() {
  * shows iframe widget
  */
 export function showWidget() {
-  const container: HTMLElement = document.getElementById(widgetId);
-  const iframe: HTMLElement = document.getElementById(iframeId);
+  const container: HTMLElement = document.getElementById(widgetId)!;
+  const iframe: HTMLElement = document.getElementById(iframeId)!;
 
   container.style.display = "flex";
   iframe.style.display = "block";
@@ -105,9 +110,9 @@ export function showWidget() {
  */
 
 export function openWidget() {
-  var container = document.getElementById(widgetId);
-  var loader = document.getElementById(loaderId);
-  var iframe = document.getElementById(iframeId);
+  var container = document.getElementById(widgetId)!;
+  var loader = document.getElementById(loaderId)!;
+  var iframe = document.getElementById(iframeId)!;
 
   container.style.visibility = "visible";
   container.style.display = "flex";
@@ -128,4 +133,3 @@ export function addStyles() {
   styleSheet.innerText = spinnerStyles;
   document.head.appendChild(styleSheet);
 }
-1;

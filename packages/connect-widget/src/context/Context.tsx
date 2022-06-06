@@ -1,11 +1,7 @@
 import { createContext } from "preact";
 import { FunctionalComponent, h } from "preact";
 import { useContext, useEffect, useState } from "preact/hooks";
-
-import { fetcher, transformBanksResponse } from "../lib/helpers";
-import { BankType } from "../types";
-
-type PageStatus = "LOADING" | "ERROR" | "SUCCESS";
+import qs from "qs";
 
 interface ContextType {
   banks: any[];
@@ -17,7 +13,27 @@ interface ContextType {
   selectedBank?: BankType;
   onInputValueChange?: (name: string, value: string) => void;
   pageStatus: PageStatus;
+  errorMessage?: string;
 }
+
+import { fetcher, transformBanksResponse } from "../lib/helpers";
+import { BankType } from "../types";
+
+type envType = "production" | "sandbox";
+
+const credentials: Record<envType, { token: string; key: string }> = {
+  production: {
+    token: "qwdnoufe3180u814001408jf",
+    key: "1308hf301h83f1iweg0jhe",
+  },
+
+  sandbox: {
+    token: "qwdnoufe3180u814001408jf",
+    key: "1308hf301h83f1iweg0jhe",
+  },
+};
+
+type PageStatus = "LOADING" | "ERROR" | "SUCCESS";
 
 const initialState: ContextType = {
   banks: [],
@@ -28,6 +44,7 @@ const initialState: ContextType = {
   onBackSelect: () => {},
   onInputValueChange: () => {},
   pageStatus: "LOADING",
+  errorMessage: "",
 };
 
 export const StateContext = createContext<Partial<ContextType>>(initialState);
@@ -36,10 +53,16 @@ export const Provider: FunctionalComponent = ({ children }) => {
   const [banks, setBanks] = useState<any[]>([]);
   const [pageStatus, setPageStatus] = useState<PageStatus>("LOADING");
   const [selectedBank, setSelectedBank] = useState<BankType | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const searchQuery = location.search.substring(1);
+
+  // @ts-ignore
+  const params = qs.parse(qs.parse(searchQuery).config);
 
   useEffect(() => {
     const fetchBanks = async () => {
@@ -57,6 +80,44 @@ export const Provider: FunctionalComponent = ({ children }) => {
 
     fetchBanks();
   }, []);
+
+  function validateOptions() {
+    const isTokenValid =
+      // @ts-ignore
+      credentials?.[params?.env]?.token === params?.token || !params?.token;
+
+    const isEnvironmentValid =
+      (params?.env && params?.env === "production") ||
+      params?.env === "sandbox";
+
+    const isKeyValid =
+      // @ts-ignore
+      credentials?.[params?.env]?.key === params?.key || !params?.key;
+
+    if (!isEnvironmentValid) {
+      setPageStatus("ERROR");
+      setErrorMessage("Invalid environment");
+      return;
+    }
+
+    if (!isTokenValid) {
+      setPageStatus("ERROR");
+      setErrorMessage("Invalid token");
+      return;
+    }
+
+    if (!isKeyValid) {
+      setPageStatus("ERROR");
+      setErrorMessage("Invalid key");
+      return;
+    }
+
+    setPageStatus("SUCCESS");
+  }
+
+  useEffect(() => {
+    validateOptions();
+  }, [params]);
 
   function onBackSelect(bank: BankType) {
     setSelectedBank(bank);
@@ -76,6 +137,7 @@ export const Provider: FunctionalComponent = ({ children }) => {
     selectedBank: selectedBank!,
     onInputValueChange: onInputValueChange!,
     pageStatus,
+    errorMessage,
   };
 
   return (
