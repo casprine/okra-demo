@@ -1,0 +1,31 @@
+.accountCard {
+  padding: 12px 16px;
+  border: 1px solid #eeeff0;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.uncheckIcon {
+  height: 24px;
+  width: 24px;
+  border: 1px solid #3c42573d;
+  border-radius: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.amount {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.checkedAccount {
+  box-shadow: 0px 8px 16px 0px rgba(57, 83, 123, 0.16);
+}

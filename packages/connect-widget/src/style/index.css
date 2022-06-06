@@ -214,6 +214,7 @@ button {
   font-size: 24px;
   margin-top: 20px;
   margin-bottom: 8px;
+  line-height: 34px;
 }
 
 .banks-container {
@@ -261,4 +262,9 @@ button {
   font-size: 16px;
   margin-top: auto;
   border-radius: 4px;
+}
+
+.account-name {
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }

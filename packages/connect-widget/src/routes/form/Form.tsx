@@ -1,6 +1,5 @@
 import { FunctionalComponent, h } from "preact";
-import { useState, useEffect } from "preact/hooks";
-import { Container, Header, TextInput, BankListItem } from "../../components";
+import { Container, Header, TextInput } from "../../components";
 import { route } from "preact-router";
 
 export const FormPage: FunctionalComponent = () => {
@@ -15,14 +14,26 @@ export const FormPage: FunctionalComponent = () => {
       </p>
 
       <div className="banks-form">
-        <TextInput placeholder="Email Address / Phone Number" />
-        <TextInput placeholder="Password / PIN" />
+        <TextInput
+          value=""
+          onChange={() => {}}
+          name="email"
+          placeholder="Email Address / Phone Number"
+        />
+        <TextInput
+          value=""
+          onChange={() => {}}
+          name="pin"
+          placeholder="Password / PIN"
+        />
         <a href="" className="forgot-password">
           Forgot password?
         </a>
       </div>
 
-      <button className="action-button">Login</button>
+      <button className="action-button" onClick={() => route("/account")}>
+        Login
+      </button>
     </Container>
   );
 };
