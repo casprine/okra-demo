@@ -14,6 +14,10 @@ interface ContextType {
   onInputValueChange?: (name: string, value: string) => void;
   pageStatus: PageStatus;
   errorMessage?: string;
+  paymentCharge?: {
+    currency: string;
+    amount: number;
+  };
 }
 
 import { fetcher, transformBanksResponse } from "../lib/helpers";
@@ -45,6 +49,10 @@ const initialState: ContextType = {
   onInputValueChange: () => {},
   pageStatus: "LOADING",
   errorMessage: "",
+  paymentCharge: {
+    currency: "",
+    amount: 0,
+  },
 };
 
 export const StateContext = createContext<Partial<ContextType>>(initialState);
@@ -57,6 +65,11 @@ export const Provider: FunctionalComponent = ({ children }) => {
   const [form, setForm] = useState({
     email: "",
     password: "",
+  });
+
+  const [paymentCharge, setPaymentCharge] = useState({
+    currency: "",
+    amount: 0,
   });
 
   const searchQuery = location.search.substring(1);
@@ -84,7 +97,7 @@ export const Provider: FunctionalComponent = ({ children }) => {
   function validateOptions() {
     const isTokenValid =
       // @ts-ignore
-      credentials?.[params?.env]?.token === params?.token || !params?.token;
+      credentials?.[params?.env]?.token === params?.token || params?.token;
 
     const isEnvironmentValid =
       (params?.env && params?.env === "production") ||
@@ -92,7 +105,7 @@ export const Provider: FunctionalComponent = ({ children }) => {
 
     const isKeyValid =
       // @ts-ignore
-      credentials?.[params?.env]?.key === params?.key || !params?.key;
+      credentials?.[params?.env]?.key === params?.key || params?.key;
 
     if (!isEnvironmentValid) {
       setPageStatus("ERROR");
@@ -115,8 +128,14 @@ export const Provider: FunctionalComponent = ({ children }) => {
     setPageStatus("SUCCESS");
   }
 
+  console.log(JSON.stringify(params, null, 2));
+
   useEffect(() => {
     validateOptions();
+
+    // if (params?.charge) {
+    //   setPaymentCharge(params?.charge as any);
+    // }
   }, [params]);
 
   function onBackSelect(bank: BankType) {
@@ -138,6 +157,7 @@ export const Provider: FunctionalComponent = ({ children }) => {
     onInputValueChange: onInputValueChange!,
     pageStatus,
     errorMessage,
+    paymentCharge: paymentCharge!,
   };
 
   return (
