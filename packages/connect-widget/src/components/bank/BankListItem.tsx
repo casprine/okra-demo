@@ -1,9 +1,9 @@
 import { FunctionalComponent, h } from "preact";
 import style from "./bankItem.module.css";
 
-interface BankListItemProps {
-  name: string;
-  image: string;
+import { BankType } from "../../types";
+
+interface BankListItemProps extends BankType {
   onClick: () => void;
 }
 

@@ -1,46 +1,34 @@
 import { ComponentProps, FunctionalComponent, h } from "preact";
-import { useState, useEffect } from "preact/hooks";
-import { Container, Header, SearchInput, BankListItem } from "../../components";
-import { fetcher, transformBanksResponse } from "../../lib/helpers";
 import { route } from "preact-router";
+import { Container, Header, SearchInput, BankListItem } from "../../components";
+
+import { useContextState } from "../../context/Context";
 
 type Bank = ComponentProps<typeof BankListItem>;
 
 export const BanksPage: FunctionalComponent = () => {
-  const [banks, setBanks] = useState<Bank[]>([]);
+  const { banks, onBackSelect } = useContextState();
 
-  useEffect(() => {
-    const fetchBanks = async () => {
-      try {
-        const response = await fetcher(
-          "https://api.okra.ng/v2/banks/listForWidget"
-        );
-
-        if (response?.status === "success") {
-          const transformedBanks = transformBanksResponse(response.data.banks);
-          setBanks(transformedBanks as any);
-        }
-      } catch (error) {}
-    };
-
-    fetchBanks();
-  }, []);
-
-  // bank: Bank;
-
-  function onBankClick() {
+  function onBankClick(bank: Bank) {
+    onBackSelect(bank);
     route("/form");
   }
 
   return (
     <Container>
-      <Header onClose={() => {}} onBackClick={() => {}} />
+      <Header onBackClick={() => {}} />
       <h3 className="title">What bank do you use?</h3>
       <SearchInput />
 
       <div className="banks-container">
-        {banks.map((bank: Bank, index: number) => {
-          return <BankListItem {...bank} onClick={onBankClick} key={index} />;
+        {banks?.map((bank: Bank, index: number) => {
+          return (
+            <BankListItem
+              {...bank}
+              onClick={() => onBankClick(bank)}
+              key={index}
+            />
+          );
         })}
       </div>
     </Container>
