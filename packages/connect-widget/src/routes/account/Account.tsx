@@ -63,26 +63,9 @@ export const AccountPage: FunctionalComponent = () => {
         })}
       </div>
 
-      {/* 
-      <div className="banks-form">
-        <TextInput
-          value=""
-          onChange={() => {}}
-          name="email"
-          placeholder="Email Address / Phone Number"
-        />
-        <TextInput
-          value=""
-          onChange={() => {}}
-          name="pin"
-          placeholder="Password / PIN"
-        />
-        <a href="" className="forgot-password">
-          Forgot password?
-        </a>
-      </div> */}
-
-      <button className="action-button">Pay ₦1,000 + NIP Charges</button>
+      <button className="action-button" onClick={() => route("/status")}>
+        Pay ₦1,000 + NIP Charges
+      </button>
     </Container>
   );
 };
